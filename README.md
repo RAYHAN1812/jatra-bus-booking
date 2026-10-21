@@ -1,9 +1,10 @@
-# Jatra — Interactive Bus Booking Demo
+# Jatra — Bus Booking + Travel Lab
 
-A responsive, framework-free bus booking frontend for Bangladesh. Built with HTML, CSS and vanilla JavaScript; it can be hosted directly on GitHub Pages.
+A responsive, framework-free travel project for Bangladesh, built with HTML, CSS and vanilla JavaScript. No build step or framework required.
 
-## Features
+## Apps included
 
+### 1. Bus Booking Demo
 - Search route, date and passenger count
 - Swap origin/destination
 - Sort sample bus options by price or departure
@@ -12,19 +13,21 @@ A responsive, framework-free bus booking frontend for Bangladesh. Built with HTM
 - Dynamic fare calculation
 - Passenger form validation for Bangladesh mobile numbers
 - Demo booking confirmation and generated reference
-- Responsive layout for mobile and desktop
+
+### 2. Jatra Travel Lab
+Open [apps.html](apps.html) for three extra mini apps:
+- **Weekend Escape Finder** — suggests a Bangladesh destination based on mood, starting city, duration and budget.
+- **Group Trip Splitter** — calculates equal shares for transport, accommodation, food, activities and other costs.
+- **Smart Packing Planner** — creates a checklist based on trip length and trip style, tracks progress and accepts custom items.
 
 ## Run locally
 
-Open `index.html` in a browser, or serve the folder with any static web server.
+Open `index.html` or `apps.html` in a browser, or serve the folder with any static web server.
 
-## Deploy with GitHub Pages
+## GitHub Pages deployment
 
-1. Open the repository's **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch `main`, folder `/ (root)`, then **Save**.
-4. Wait for GitHub Pages to publish the site. The URL will appear in Settings → Pages.
+The repository includes a GitHub Actions workflow at `.github/workflows/deploy-pages.yml`. In repository **Settings → Pages**, select **GitHub Actions** as the build and deployment source. The workflow publishes the repository root after pushes to `main`. The published URL appears in Settings → Pages.
 
 ## Important limitations
 
-This is a frontend demo. It uses sample operators, fares, and seat availability. The booking reference is generated in the browser and does not represent a real ticket. It does not save bookings to a database, lock seats across users, authenticate customers, or process payments. A production service needs a secure backend, persistent database, operator inventory/API access, and a compliant payment gateway integration. Never place secret API keys in frontend files.
+All bus inventory, seats, fares and destination estimates are sample data. The booking reference is generated in the browser and does not represent a real ticket. No bookings or checklist data are saved to a server, seats are not locked across users, and no payments are processed. Destination prices and travel conditions are not live-verified. The expense splitter assumes equal sharing and does not track individual payments. A production booking service needs a secure backend, persistent database, operator inventory/API access, and a compliant payment integration. Never put secret API keys in frontend files.
