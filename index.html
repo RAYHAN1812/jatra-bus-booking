@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#102e40" />
+  <meta name="description" content="Jatra is an interactive Bangladesh bus booking demo. Search routes, choose seats and calculate fares." />
+  <title>Jatra — Bus Booking</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">↗</span><span>jatra<small>YOUR JOURNEY, SIMPLIFIED</small></span></a>
+    <nav><a href="#search">Find a bus</a><a href="#why">Why Jatra</a><a href="#help">Help</a></nav>
+    <span class="demo-pill">Interactive demo</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">THE ROAD IS YOURS</span>
+        <h1>Go places.<br><em>Feel free.</em></h1>
+        <p>Find your ride, choose your seat, and make the journey part of the adventure.</p>
+        <div class="hero-points"><span>✓ Easy booking</span><span>✓ Choose your seat</span><span>✓ Clear fares</span></div>
+      </div>
+      <div class="hero-art" role="img" aria-label="Illustration of a coach travelling through green hills">
+        <div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
+        <div class="road"></div><div class="bus-art"><div class="bus-window"></div><div class="bus-window"></div><div class="bus-window"></div><div class="bus-wheel wheel-a"></div><div class="bus-wheel wheel-b"></div></div>
+        <span class="art-label">NEXT STOP: SOMEWHERE GOOD</span>
+      </div>
+    </section>
+
+    <section class="search-panel panel" id="search">
+      <div class="section-heading"><div><span class="eyebrow">PLAN YOUR TRIP</span><h2>Where to next?</h2></div><span class="heading-icon">⌁</span></div>
+      <form id="search-form" class="search-grid">
+        <label>Leaving from<select id="origin" required></select></label>
+        <button class="swap" id="swap" type="button" aria-label="Swap origin and destination">⇅</button>
+        <label>Going to<select id="destination" required></select></label>
+        <label>Journey date<input id="date" type="date" required /></label>
+        <label>Passengers<select id="passengers"><option value="1">1 passenger</option><option value="2">2 passengers</option><option value="3">3 passengers</option><option value="4">4 passengers</option></select></label>
+        <button class="primary search-button" type="submit">⌕ <span>Search buses</span></button>
+      </form>
+      <p class="fineprint">Demo schedules and fares only. No real tickets are issued.</p>
+      <p class="error" id="search-error" aria-live="polite"></p>
+    </section>
+
+    <section id="results-section" class="results-section hidden">
+      <div class="section-heading"><div><span class="eyebrow">YOUR OPTIONS</span><h2>Available buses</h2><p id="route-summary" class="muted"></p></div><span class="result-count" id="result-count">3 options</span></div>
+      <div class="filters panel">
+        <label>Sort by<select id="sort"><option value="recommended">Recommended</option><option value="price">Lowest price</option><option value="departure">Departure time</option></select></label>
+        <label>Bus type<select id="filter"><option value="all">All buses</option><option value="ac">AC only</option><option value="nonac">Non-AC only</option></select></label>
+      </div>
+      <div id="bus-list" class="bus-list"></div>
+    </section>
+
+    <section id="booking-section" class="booking-layout hidden">
+      <div class="panel seat-panel">
+        <div class="section-heading"><div><span class="eyebrow">STEP 1 OF 2</span><h2>Choose your seats</h2><p id="selected-bus-subtitle" class="muted"></p></div><button id="back-results" class="text-button" type="button">← Buses</button></div>
+        <div class="driver-row"><span>FRONT OF BUS</span><span class="steering">◉</span></div>
+        <div id="seat-map" class="seat-map"></div>
+        <div class="seat-legend"><span><i class="available"></i> Available</span><span><i class="chosen"></i> Selected</span><span><i class="occupied"></i> Booked</span></div>
+        <p class="muted small" id="seat-instruction">Choose your seats to continue.</p>
+        <p class="error" id="seat-error" aria-live="polite"></p>
+      </div>
+      <aside class="panel summary-panel">
+        <span class="eyebrow">YOUR JOURNEY</span><h3 id="summary-route"></h3><p id="summary-date" class="muted"></p>
+        <div class="summary-line"><span>Bus</span><strong id="summary-bus"></strong></div>
+        <div class="summary-line"><span>Seats</span><strong id="summary-seats">None selected</strong></div>
+        <div class="summary-line"><span>Price per seat</span><strong id="summary-price"></strong></div>
+        <div class="total-line"><span>Total fare</span><strong id="summary-total">৳0</strong></div>
+        <button id="continue" class="primary full" type="button">Continue to passenger details →</button>
+      </aside>
+    </section>
+
+    <section id="passenger-section" class="panel passenger-panel hidden">
+      <div class="section-heading"><div><span class="eyebrow">STEP 2 OF 2</span><h2>Passenger details</h2><p class="muted">Who is travelling with us?</p></div></div>
+      <form id="passenger-form" class="passenger-form">
+        <label>Full name<input id="full-name" autocomplete="name" placeholder="Passenger's full name" required minlength="2" /></label>
+        <label>Mobile number<input id="phone" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX" required /></label>
+        <label>Payment preference<select id="payment"><option>Mobile banking / online payment</option><option>Pay at bus counter</option></select></label>
+        <div class="checkout-total"><span>Amount due</span><strong id="checkout-total">৳0</strong></div>
+        <p class="fineprint">This demo does not process payments or reserve real seats.</p>
+        <p class="error" id="passenger-error" aria-live="polite"></p>
+        <div class="button-row"><button type="button" id="back-seats" class="secondary">← Back to seats</button><button class="primary" type="submit">Confirm demo booking</button></div>
+      </form>
+    </section>
+
+    <section id="confirmation" class="panel confirmation hidden" aria-live="polite">
+      <div class="success-mark">✓</div><span class="eyebrow">ALL SET (DEMO)</span><h2>Your trip is taking shape.</h2><p class="muted">This is a prototype confirmation. No real ticket has been booked and no payment was taken.</p>
+      <div id="confirmation-details" class="confirmation-details"></div>
+      <button id="new-booking" class="primary full" type="button">Book another journey</button>
+    </section>
+
+    <section class="why-section" id="why"><span class="eyebrow">TRAVEL, WITHOUT THE FUSS</span><h2>Good journeys start here.</h2><div class="feature-grid"><article><span class="feature-icon">⌕</span><h3>Find your ride</h3><p>Compare sample operators, departure times, bus types, and fares in one place.</p></article><article><span class="feature-icon">▦</span><h3>Pick your seat</h3><p>Choose seats visually and watch your total update as you go.</p></article><article><span class="feature-icon">♡</span><h3>Keep it simple</h3><p>A clean, responsive booking flow designed for journeys across Bangladesh.</p></article></div></section>
+  </main>
+  <footer id="help"><a class="brand footer-brand" href="#"><span class="brand-mark">↗</span><span>jatra<small>YOUR JOURNEY, SIMPLIFIED</small></span></a><p>© 2026 Jatra demo · Sample data only</p><p class="muted">Real bookings require a secure backend and operator/payment integrations.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>
