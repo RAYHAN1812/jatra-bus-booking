@@ -16,7 +16,7 @@ $("find-escape").addEventListener("click",()=>{
  if(!pool.length)pool=destinations.filter(d=>d.budget<=budget);
  pool.sort((a,b)=>Number(b.from.includes(start))-Number(a.from.includes(start))||a.budget-b.budget);
  const dest=pool[0]||destinations.find(d=>d.moods.includes(mood))||destinations[0];
- const est=Math.round(dest.budget*(days===1?.62:days===2?1:1.42));
+ const est=Math.round(dest.budget*(days === 1 ? 0.62 : days === 2 ? 1 : 1.42));
  const plan=days===1?[dest.plan[0].replace("Day 1: ",""),dest.plan[1]||"Enjoy a relaxed afternoon and head home before late evening."]:dest.plan.slice(0,days);
  $("escape-result").innerHTML=`<span class="eyebrow">YOUR MATCH · ${dest.area.toUpperCase()}</span><h3>${dest.name}</h3><p>${dest.best}</p><div class="metric-row"><div class="metric"><span>Estimated budget / person</span><strong>${taka(est)}</strong></div><div class="metric"><span>Suggested duration</span><strong>${days} day${days>1?"s":""}</strong></div></div><ul>${plan.map(p=>`<li>${p}</li>`).join("")}</ul><p><strong>Planning tip:</strong> Check current transport, weather, local access and accommodation before leaving. Estimates vary by season and group size.</p>`;
  $("escape-result").classList.remove("hidden");
